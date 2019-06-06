@@ -264,7 +264,40 @@ public class MyProject {
         return ac_cre;
     }
 
+    public void setAc(String ac_cre) {
+        this.ac_cre = ac_cre;
+    }
+
+/* 登录日志的属性*/
+private String logname;
+private String remark;
+private Date createdate;
+
     public void setAc_cre(String ac_cre) {
         this.ac_cre = ac_cre;
+    }
+
+    public Date getCreatedate() {
+        return createdate;
+    }
+
+    public void setCreatedate(Date createdate) {
+        this.createdate = createdate;
+    }
+
+    public String getLogname() {
+        return logname;
+    }
+
+    public void setLogname(String logname) {
+        this.logname = logname;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

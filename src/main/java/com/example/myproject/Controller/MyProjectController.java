@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.myproject.Service.MyProjectService;
+import javax.servlet.http.HttpSession;
 
 import java.util.List;
 
@@ -17,10 +18,15 @@ public class MyProjectController {
     private MyProjectService myProjectService;
 /**/
     @GetMapping("/index")
-    public String Register(){
-
+    public String Register(HttpSession session){
+MyProject myProject= (MyProject)session.getAttribute("userinfo");
+//解决盗链问题
+        if(session.getAttribute("userinfo")==null){
+            return"redirect:/myp/login";
+        }
         return "index";
     }
+
     /* 统计分析页面 */
     @GetMapping("/statistic")
     public String Statistic(){
@@ -35,12 +41,13 @@ public class MyProjectController {
     }
     /* 管理员登录日志页面 */
     @GetMapping("/adminlog")
-    public String adminLog(){
-
+    public String adminLog(Model model ){
+        List<MyProject> myProjectList= myProjectService.findAllAdminLog();
+        model.addAttribute("adminlog",myProjectList);
         return "adminlog";
     }
 
-    /* 注册页面 */
+    /* 登录页面 */
     @GetMapping("/login")
     public String Login(){
 
@@ -48,7 +55,32 @@ public class MyProjectController {
     }
 
 
+@PostMapping("/register")
+public String getNameAndPassword(@RequestParam(value ="username")String ad_name,
+                                 @RequestParam(value ="password")String ad_pw,
+                                  HttpSession session){
+    MyProject myProject= myProjectService.userLogin(ad_name,ad_pw);
+    if(myProject==null){
+        return"redirect:/myp/login";
+    }
+    else{
+        MyProject log=new MyProject();
+        log.setLogname(myProject.getAd_name());
+        log.setRemark("Web端登录成功");
+        myProjectService.addAdminLog(log);
 
+        session.setAttribute("userinfo",myProject);
+        session.setAttribute("abc","中南民族大学");
+        return "redirect:/myp/index";
+    }
+
+
+
+
+
+
+
+}
 
 
 
@@ -58,17 +90,12 @@ public class MyProjectController {
 
 
     @GetMapping("/list")
-    public String getNameAndPassword(//@RequestParam(value ="username")String username,
-                                  //@RequestParam(value ="password")String password,
-            Model model ){
-       //if(username=="MSQ"&&password=="123"){
+    public String getSomeActivity(Model model ){
+
         List<MyProject> myProjectList= myProjectService.findSomeActivity();
         model.addAttribute("smallmyp",myProjectList);
         return "activity";
-       // return "对了";}
-       //else{
-          // return"用户名或密码错误，请重试";
-      // }
+
 
     }
 

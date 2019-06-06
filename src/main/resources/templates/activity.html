@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +14,7 @@
   <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="/css/sb-admin.css" rel="stylesheet">
-  <title>user login log</title>
+  <title>administrator messages</title>
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation -->
@@ -36,7 +36,7 @@
           </a>
       	</li>
       	<li class="nav-item" data-toggle="tooltip" data-placement="right" title="statistic">
-      	  <a class="nav-link" href="/myp/administrator">
+      	  <a class="nav-link" href="/myp/statistic">
             <i class="fa fa-fw fa-area-chart"></i>
             <span class="nav-link-text">统计分析</span>
           </a>
@@ -87,6 +87,8 @@
       </ul>
       <ul class="navbar-nav ml-auto">
       	<li class="nav-item dropdown"></li>
+          <a href="#" th:text="${session.userinfo.ad_name}"></a>
+          <a href="#" th:text="${session.abc}"></a>
       	<li class="nav-item">
       	  <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
             <i class="fa fa-fw fa-sign-out"></i>退出登录</a>
@@ -101,44 +103,37 @@
         <li class="breadcrumb-item">
           <a href="/myp/index">报名助手</a>
         <li class="breadcrumb-item">后台管理</li>
-        <li class="breadcrumb-item active">登录日志</li>
+        <li class="breadcrumb-item active">活动信息管理</li>
       </ol>
   	  <!-- Example DataTables Card-->
       <div class="card mb-3">
       	<div class="card-header">
-      	  <i class="fa fa-table"></i> 用户登录日志
+      	  <i class="fa fa-table"></i> 管理员权限表
       	</div>
       	<div class="card-body">
       	  <div class="table-responsive">
       	  	<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
       	  	  <thead>
       	  	  	<tr>
-                  <th>用户id</th>
-                  <th>用户名</th>
-                  <th>最后登陆时间</th>
+                    <th>活动编号</th>
+                    <th>活动名称</th>
+                    <th>发布日期</th>
+                    <th>活动人数</th>
+                    <th>报名人数</th>
+                    <th>详情</th>
+                    <th>操作</th>
                 </tr>
       	  	  </thead>
       	  	  <tbody>
-      	  	  	<tr>
-      	  	  	  <td>1384567</td>
-      	  	  	  <td>热干面有点干</td>
-                  <td>2019-06-04 8：30</td>
-      	  	  	</tr>
-      	  	  	<tr>
-      	  	  	  <td>1386877</td>
-      	  	  	  <td>夏天就是要吃西瓜啊</td>
-                  <td>2019-06-04 8：35</td>
-      	  	  	</tr>
-      	  	  	<tr>
-      	  	  	  <td>4984567</td>
-      	  	  	  <td>香香的羊肉串不是烤面筋</td>
-                  <td>2019-06-04 3：50</td>
-      	  	  	</tr>
-      	  	  	<tr>
-      	  	  	  <td>1319567</td>
-      	  	  	  <td>没吃过大闸蟹</td>
-                  <td>2019-06-04 6：50</td>
-      	  	  	</tr>
+              <tr th:each="MyProject,userStat:${smallmyp}">
+                  <td th:text="${MyProject.ac_id}">JorDan</td>
+                  <td th:text="${MyProject.ac_name}">JorDan</td>
+                  <td th:text="${#dates.format(MyProject.ac_pdate,'yyyy/MM/dd')}">1967</td>
+                  <td th:text="${MyProject.ac_num}">JorDan</td>
+                  <td th:text="${MyProject.ac_jnum}">JorDan</td>
+                  <td><a th:href="@{'lists/'+${MyProject.ac_id}}">查看详情</a></td>
+                  <td><a th:href="@{'del/'+${MyProject.ac_id}}">删除</a></td>
+              </tr>
       	  	  </tbody>
       	  	</table>
       	  </div>

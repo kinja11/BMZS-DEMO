@@ -28,6 +28,8 @@ public class MyProjectServiceImpl implements MyProjectService {
         return myProjectMapper.deleteByID(ac_id);
     }
 
+
+    /* 登录验证    */
     @Override
     public MyProject userLogin(String ad_name, String ad_pw) {
         return myProjectMapper.findNameAndPassword(ad_name, ad_pw);
@@ -77,6 +79,18 @@ public class MyProjectServiceImpl implements MyProjectService {
     @Override
     public Integer updateByAdminId(MyProject myProject) {
         return myProjectMapper.updateByAdminId(myProject);
+    }
+
+
+    /* 登录日志*/
+    @Override
+    public Integer addAdminLog(MyProject myProject) {
+        return myProjectMapper.addAdminLog(myProject);
+    }
+
+    @Override
+    public List<MyProject> findAllAdminLog() {
+        return myProjectMapper.getAllAdminLog();
     }
 
 }

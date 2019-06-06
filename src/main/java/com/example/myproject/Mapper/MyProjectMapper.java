@@ -50,18 +50,18 @@ MyProject findByAdminId(Integer ad_id);
  Integer updateByAdminId(MyProject myProject);
 
 
-
-
-
-
-
-
-
     /*
     登录的验证
      */
     @Select("select* from administrator where ad_name=#{ad_name}and ad_pw=#{ad_pw}")
     MyProject findNameAndPassword(String ad_name, String ad_pw);
 
+    /*
+    登录日志
+     */
+    @Insert("insert into adminlog (logname,createdate,remark)values(#{logname},current_date(),#{remark})")
+    Integer addAdminLog(MyProject myProject);
 
+    @Select("select use.u_sex,log.createdate,log.remark from user use join adminlog log  where use.ur_name=log.logname")
+    List<MyProject> getAllAdminLog();
 }

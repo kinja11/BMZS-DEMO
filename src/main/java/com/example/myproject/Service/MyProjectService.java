@@ -24,4 +24,8 @@ MyProject userLogin(String ad_name,String ad_pw);
  MyProject findByAdminId(Integer ad_id);
  Integer updateByAdminId(MyProject myProject);
 
+ /* 登录日志*/
+ Integer addAdminLog(MyProject myProject);
+ List<MyProject> findAllAdminLog();
+
 }

@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>index</title>
-
   <!-- Bootstrap core CSS-->
   <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -17,8 +14,8 @@
   <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="/css/sb-admin.css" rel="stylesheet">
+  <title>administrator login log</title>
 </head>
-
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
@@ -90,6 +87,8 @@
       </ul>
       <ul class="navbar-nav ml-auto">
       	<li class="nav-item dropdown"></li>
+          <a href="#" th:text="${session.userinfo.ad_name}"></a>
+          <a href="#" th:text="${session.abc}"></a>
       	<li class="nav-item">
       	  <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
             <i class="fa fa-fw fa-sign-out"></i>退出登录</a>
@@ -98,10 +97,46 @@
     </div>
   </nav>
   <div class="content-wrapper">
-    <div class="container-fluid">
-      
-    </div>
-    <!-- /.container-fluid-->
+  	<div class="container-fluid">
+  	  <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="/myp/index">报名助手</a>
+        <li class="breadcrumb-item">后台管理</li>
+        <li class="breadcrumb-item active">登录日志</li>
+      </ol>
+  	  <!-- Example DataTables Card-->
+      <div class="card mb-3">
+      	<div class="card-header">
+      	  <i class="fa fa-table"></i> 管理员登录日志
+      	</div>
+      	<div class="card-body">
+      	  <div class="table-responsive">
+      	  	<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+      	  	  <thead>
+      	  	  	<tr>
+                  <th>管理员姓名</th>
+                  <th>管理员性别</th>
+                  <th>登录时间</th>
+                    <th>备注</th>
+                </tr>
+      	  	  </thead>
+      	  	  <tbody>
+              <tr th:each="MyProject,userStat:${adminlog}">
+                  <td th:text="${MyProject.ur_name}">JorDan</td>
+                  <td th:text="${MyProject.logname}">JorDan</td>
+                  <td th:text="${#dates.format(MyProject.createdate,'yyyy/MM/dd')}">1967</td>
+                  <td th:text="${MyProject.remark}">JorDan</td>
+
+              </tr>
+      	  	  </tbody>
+      	  	</table>
+      	  </div>
+      	</div>
+      	<div class="card-footer small text-muted"></div>
+      </div>
+  	</div>
+  	<!-- /.container-fluid-->
     <!-- /.content-wrapper 底部说明-->
     <footer class="sticky-footer">
       <div class="container">
@@ -110,7 +145,7 @@
         </div>
       </div>
     </footer>
-    <!-- Scroll to Top Button-->
+    <!-- Scroll to Top Button 返回顶端按钮-->
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fa fa-angle-up"></i>
     </a>
@@ -132,20 +167,18 @@
         </div>
       </div>
     </div>
-    <!-- Bootstrap core JavaScript-->
+  	<!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Page level plugin JavaScript-->
-    <script src="/vendor/chart.js/Chart.min.js"></script>
     <script src="/vendor/datatables/jquery.dataTables.js"></script>
     <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
     <script src="/js/sb-admin-datatables.min.js"></script>
-    <script src="/js/sb-admin-charts.min.js"></script>
   </div>
 </body>
 </html>
